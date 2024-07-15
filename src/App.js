@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import HelloWorld from "./components/HelloWorld";
+import Square from "./components/Square";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HelloWorld content="SonTVA" color="red" heading={1}>
+        <label>Name: </label>
+      </HelloWorld>
+      <HelloWorld content="18" color="blue" heading={2}>
+        <label>Age: </label>
+      </HelloWorld>
+      <HelloWorld content="Da nang" color="blue" heading={3}>
+        <label>Address: </label>
+      </HelloWorld>
+
+      <Square />
     </div>
   );
 }
