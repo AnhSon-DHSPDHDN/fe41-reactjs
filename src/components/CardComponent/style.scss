@@ -1,0 +1,21 @@
+.card-component {
+  width: 250px;
+  height: 350px;
+  border: 1px solid red;
+  padding: 10px;
+  box-sizing: border-box;
+
+  &__image {
+    box-sizing: border-box;
+  }
+
+  &__image-img {
+    width: 230px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  &__title, &__description {
+    margin: 0;
+  }
+}
