@@ -3,36 +3,6 @@ import { TaskApis } from "./apis/taskApis";
 import "./App.css";
 import { Button, Table, Flex, Modal, Form, Input, message } from "antd";
 
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Task Name",
-    dataIndex: "taskName",
-    key: "taskName",
-  },
-  {
-    title: "Create By",
-    dataIndex: "createBy",
-    key: "createBy",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: () => {
-      return (
-        <Flex gap={10}>
-          <Button>Edit</Button>
-          <Button danger>Delete</Button>
-        </Flex>
-      );
-    },
-  },
-];
-
 const initialFormValue = {
   taskName: "",
   createBy: "",
@@ -41,11 +11,64 @@ const initialFormValue = {
 function App() {
   const [tasksData, setTasksData] = useState([]);
   const [isShowForm, setIsShowForm] = useState(false);
+  const [editTaskState, setEditTaskState] = useState({
+    isEditMode: false,
+    taskId: null,
+  });
   const [form] = Form.useForm();
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Task Name",
+      dataIndex: "taskName",
+      key: "taskName",
+    },
+    {
+      title: "Create By",
+      dataIndex: "createBy",
+      key: "createBy",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_record) => {
+        return (
+          <Flex gap={10}>
+            <Button onClick={() => handleOpenEditTask(_record)}>Edit</Button>
+            <Button danger onClick={() => handleDeleteTaskById(_record.id)}>
+              Delete
+            </Button>
+          </Flex>
+        );
+      },
+    },
+  ];
+
+  const handleOpenEditTask = (task) => {
+    setIsShowForm(true);
+    setEditTaskState({
+      isEditMode: true,
+      taskId: task.id,
+    });
+    form.setFieldsValue({
+      taskName: task.taskName,
+      createBy: task.createBy,
+    });
+  };
 
   const handleFetchAllTask = async () => {
     const data = await TaskApis.getAllTasks();
     setTasksData(data);
+  };
+
+  const handleDeleteTaskById = async (taskId) => {
+    await TaskApis.deleteTaskById(taskId);
+    await handleFetchAllTask();
+    message.success("Deleted task done!");
   };
 
   useEffect(() => {
@@ -53,11 +76,20 @@ function App() {
   }, []);
 
   const onFinish = async (values) => {
-    await TaskApis.createTask(values);
-    await handleFetchAllTask();
+    if (editTaskState.isEditMode) {
+      await TaskApis.updateTaskById(editTaskState.taskId, values);
+      message.success("Edit Task Success!!");
+    } else {
+      await TaskApis.createTask(values);
+      message.success("Add task Success!!");
+    }
     setIsShowForm(false);
     form.resetFields();
-    message.success("Add task Success!!");
+    await handleFetchAllTask();
+    setEditTaskState({
+      isEditMode: false,
+      taskId: null,
+    });
   };
 
   return (
@@ -68,9 +100,16 @@ function App() {
       </Button>
       <Table dataSource={tasksData} columns={columns} rowKey={"id"} />;
       <Modal
-        title={"Add Task"}
+        title={editTaskState.isEditMode ? "Edit Task" : "Add Task"}
         open={isShowForm}
-        onCancel={() => setIsShowForm(false)}
+        onCancel={() => {
+          setIsShowForm(false);
+          setEditTaskState({
+            isEditMode: false,
+            taskId: null,
+          });
+          form.resetFields();
+        }}
         onOk={() => form.submit()}
       >
         <Form
