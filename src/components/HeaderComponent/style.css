@@ -1,0 +1,17 @@
+.header-component {
+  background-color: aqua;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-component__list {
+  margin: 0;
+  display: flex;
+  list-style: none;
+  gap: 10px;
+}
+
+.header-component__list-item {
+  width: 50px;
+  height: 30px;
+}
