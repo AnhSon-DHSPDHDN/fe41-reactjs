@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "productName": "Vinfast 3",
+      "productPrice": "10000"
+    },
+    {
+      "id": 2,
+      "productName": "Vinfast 5",
+      "productPrice": "25000"
+    },
+    {
+      "id": 3,
+      "productName": "Vinfast 7",
+      "productPrice": "30000"
+    }
+  ]
+}
