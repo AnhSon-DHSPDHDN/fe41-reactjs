@@ -1,14 +1,20 @@
 import React from 'react'
 import { Flex } from 'antd'
 import { useNavigate, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actLogout } from '../../redux/features/auth/authSlice';
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
   const { userInfo, accessToken } = useSelector(state => state.auth);
+  const dispatch = useDispatch()
 
   const handleGoToLogin = () => {
     navigate('/login')
+  }
+
+  const handleLogout = () => {
+    dispatch(actLogout())
   }
 
   return (
@@ -26,7 +32,7 @@ const HeaderComponent = () => {
         {accessToken && <span>Hi: <b>{userInfo?.fullName || ''}</b></span>}
         {
           accessToken
-            ? <button>Logout</button>
+            ? <button onClick={handleLogout}>Logout</button>
             : <button onClick={handleGoToLogin}>Login</button>
         }
       </Flex>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Button, Form, Input } from 'antd';
-import { actLogin } from '../../redux/features/auth/authSlice'
+import { actLoginThunk } from '../../redux/features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    dispatch(actLogin(values))
+    dispatch(actLoginThunk(values))
   };
 
   return (

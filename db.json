@@ -3,17 +3,37 @@
     {
       "id": 1,
       "productName": "Vinfast 3",
-      "productPrice": "10000"
+      "productPrice": "10000",
+      "productImage": "https://cdn.tgdd.vn/News/1565660/VF31-1280x721.jpg",
+      "battery": 55
     },
     {
       "id": 2,
       "productName": "Vinfast 5",
-      "productPrice": "25000"
+      "productPrice": "25000",
+      "productImage": "https://vinfastotominhdao.vn/wp-content/uploads/VF5-3.jpg",
+      "battery": 57
     },
     {
       "id": 3,
       "productName": "Vinfast 7",
-      "productPrice": "30000"
+      "productPrice": "30000",
+      "productImage": "https://i1-vnexpress.vnecdn.net/2023/12/02/VF-7-VNE-TOP-1701485865.jpg?w=2400&h=0&q=100&dpr=1&fit=crop&s=dy8s_-izNAGBRXMthDRBiw&t=image",
+      "battery": 59
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "sontva",
+      "password": "123",
+      "fullName": "SonTVA"
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "password": "123",
+      "fullName": "Admin"
     }
   ]
 }

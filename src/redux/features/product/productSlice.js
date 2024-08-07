@@ -5,6 +5,13 @@ import { message } from "antd";
 const initialState = {
   allProducts: [],
   isLoading: false,
+  productInfo: {
+    id: "",
+    productName: "",
+    productPrice: "",
+    productImage: "",
+    battery: "",
+  },
 };
 
 export const actFetchAllProduct = createAsyncThunk(
@@ -13,6 +20,18 @@ export const actFetchAllProduct = createAsyncThunk(
     try {
       const data = await productApis.getAllProduct();
       return data; // Những gì return sẽ đưa vào action.payload của fulfilled
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Error call API");
+    }
+  }
+);
+
+export const actFetchProductById = createAsyncThunk(
+  "product/actFetchProductById",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await productApis.getProductById(payload);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue("Error call API");
     }
@@ -34,6 +53,9 @@ const productSlice = createSlice({
     builder.addCase(actFetchAllProduct.rejected, (state, action) => {
       state.isLoading = false;
       message.error("Has an errors");
+    });
+    builder.addCase(actFetchProductById.fulfilled, (state, action) => {
+      state.productInfo = action.payload;
     });
   },
 });
